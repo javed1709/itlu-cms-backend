@@ -5,7 +5,15 @@
   exports.getAllMenuItems = async (req, res) => {
     try {
       const items = await storage.getAllMenuItems();
-      res.json(items);
+      const mapped = items.map((doc) => {
+        const obj = doc.toObject();
+        // If remote image with provided local fallback, use fallback path
+        if (obj.imageUrl && /^https?:\/\//.test(obj.imageUrl) && obj.fallbackImagePath) {
+          obj.imageUrl = obj.fallbackImagePath;
+        }
+        return obj;
+      });
+      res.json(mapped);
     } catch {
       res.status(500).json({ error: "Failed to fetch menu items" });
     }
@@ -15,7 +23,14 @@
     try {
       const { category } = req.params;
       const items = await storage.getMenuItemsByCategory(category);
-      res.json(items);
+      const mapped = items.map((doc) => {
+        const obj = doc.toObject();
+        if (obj.imageUrl && /^https?:\/\//.test(obj.imageUrl) && obj.fallbackImagePath) {
+          obj.imageUrl = obj.fallbackImagePath;
+        }
+        return obj;
+      });
+      res.json(mapped);
     } catch {
       res.status(500).json({ error: "Failed to fetch menu items" });
     }
@@ -26,7 +41,11 @@
       const { id } = req.params;
       const item = await storage.getMenuItemById(id);
       if (!item) return res.status(404).json({ error: "Menu item not found" });
-      res.json(item);
+      const obj = item.toObject();
+      if (obj.imageUrl && /^https?:\/\//.test(obj.imageUrl) && obj.fallbackImagePath) {
+        obj.imageUrl = obj.fallbackImagePath;
+      }
+      res.json(obj);
     } catch {
       res.status(500).json({ error: "Failed to fetch menu item" });
     }

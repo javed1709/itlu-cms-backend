@@ -1,4 +1,4 @@
-const { HeaderBanner, HeroSection, HeroScrollMenuItem, AboutSection, HowWeWorkItem, GalleryItem, FaqItem, Event, ContactSection, FooterContact } = require("../models/landing-page");
+const { HeaderBanner, HeroSection, HeroScrollMenuItem, AboutSection, HowWeWorkItem, GalleryItem, FaqItem, Event, ContactSection, FooterContact, Testimonial, TeamMember, NavItem, FoodCategory, LocationSection } = require("../models/landing-page");
 
 // Header Banner Controller
 exports.getHeaderBanner = async (req, res) => {
@@ -345,5 +345,192 @@ exports.updateFooterContact = async (req, res) => {
     res.json(footer);
   } catch {
     res.status(500).json({ error: "Failed to update footer contact" });
+  }
+};
+
+// Testimonials Controller
+exports.getAllTestimonials = async (req, res) => {
+  try {
+    const items = await Testimonial.find().sort({ order: 1 });
+    res.json(items);
+  } catch {
+    res.status(500).json({ error: "Failed to fetch testimonials" });
+  }
+};
+
+exports.createTestimonial = async (req, res) => {
+  try {
+    const item = await Testimonial.create(req.body);
+    res.status(201).json(item);
+  } catch {
+    res.status(500).json({ error: "Failed to create testimonial" });
+  }
+};
+
+exports.updateTestimonial = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await Testimonial.findByIdAndUpdate(id, req.body, { new: true });
+    if (!item) return res.status(404).json({ error: "Testimonial not found" });
+    res.json(item);
+  } catch {
+    res.status(500).json({ error: "Failed to update testimonial" });
+  }
+};
+
+exports.deleteTestimonial = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await Testimonial.findByIdAndDelete(id);
+    if (!item) return res.status(404).json({ error: "Testimonial not found" });
+    res.status(204).send();
+  } catch {
+    res.status(500).json({ error: "Failed to delete testimonial" });
+  }
+};
+
+// Team Members Controller
+exports.getAllTeamMembers = async (req, res) => {
+  try {
+    const items = await TeamMember.find().sort({ order: 1 });
+    res.json(items);
+  } catch {
+    res.status(500).json({ error: "Failed to fetch team members" });
+  }
+};
+
+exports.createTeamMember = async (req, res) => {
+  try {
+    const item = await TeamMember.create(req.body);
+    res.status(201).json(item);
+  } catch {
+    res.status(500).json({ error: "Failed to create team member" });
+  }
+};
+
+exports.updateTeamMember = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await TeamMember.findByIdAndUpdate(id, req.body, { new: true });
+    if (!item) return res.status(404).json({ error: "Team member not found" });
+    res.json(item);
+  } catch {
+    res.status(500).json({ error: "Failed to update team member" });
+  }
+};
+
+exports.deleteTeamMember = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await TeamMember.findByIdAndDelete(id);
+    if (!item) return res.status(404).json({ error: "Team member not found" });
+    res.status(204).send();
+  } catch {
+    res.status(500).json({ error: "Failed to delete team member" });
+  }
+};
+
+// Navbar Items Controller
+exports.getAllNavItems = async (req, res) => {
+  try {
+    const items = await NavItem.find().sort({ order: 1 });
+    res.json(items);
+  } catch {
+    res.status(500).json({ error: "Failed to fetch navbar items" });
+  }
+};
+
+exports.createNavItem = async (req, res) => {
+  try {
+    const item = await NavItem.create(req.body);
+    res.status(201).json(item);
+  } catch {
+    res.status(500).json({ error: "Failed to create navbar item" });
+  }
+};
+
+exports.updateNavItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await NavItem.findByIdAndUpdate(id, req.body, { new: true });
+    if (!item) return res.status(404).json({ error: "Navbar item not found" });
+    res.json(item);
+  } catch {
+    res.status(500).json({ error: "Failed to update navbar item" });
+  }
+};
+
+exports.deleteNavItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await NavItem.findByIdAndDelete(id);
+    if (!item) return res.status(404).json({ error: "Navbar item not found" });
+    res.status(204).send();
+  } catch {
+    res.status(500).json({ error: "Failed to delete navbar item" });
+  }
+};
+
+// Food Categories Controller
+exports.getAllFoodCategories = async (req, res) => {
+  try {
+    const items = await FoodCategory.find().sort({ order: 1 });
+    res.json(items);
+  } catch {
+    res.status(500).json({ error: "Failed to fetch food categories" });
+  }
+};
+
+exports.createFoodCategory = async (req, res) => {
+  try {
+    const item = await FoodCategory.create(req.body);
+    res.status(201).json(item);
+  } catch {
+    res.status(500).json({ error: "Failed to create food category" });
+  }
+};
+
+exports.updateFoodCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await FoodCategory.findByIdAndUpdate(id, req.body, { new: true });
+    if (!item) return res.status(404).json({ error: "Food category not found" });
+    res.json(item);
+  } catch {
+    res.status(500).json({ error: "Failed to update food category" });
+  }
+};
+
+exports.deleteFoodCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await FoodCategory.findByIdAndDelete(id);
+    if (!item) return res.status(404).json({ error: "Food category not found" });
+    res.status(204).send();
+  } catch {
+    res.status(500).json({ error: "Failed to delete food category" });
+  }
+};
+
+// Location Section Controller
+exports.getLocationSection = async (req, res) => {
+  try {
+    const section = await LocationSection.findOne();
+    if (!section) return res.status(404).json({ error: "Location section not found" });
+    res.json(section);
+  } catch {
+    res.status(500).json({ error: "Failed to fetch location section" });
+  }
+};
+
+exports.updateLocationSection = async (req, res) => {
+  try {
+    const section = await LocationSection.findOneAndUpdate({}, req.body, {
+      new: true,
+      upsert: true,
+    });
+    res.json(section);
+  } catch {
+    res.status(500).json({ error: "Failed to update location section" });
   }
 };
