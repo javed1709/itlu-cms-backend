@@ -57,6 +57,34 @@ async function registerRoutes(app) {
   app.post("/api/footer-contact", landingController.createFooterContact);
   app.put("/api/footer-contact", landingController.updateFooterContact);
 
+  // Testimonials Routes
+  app.get("/api/testimonials", landingController.getAllTestimonials);
+  app.post("/api/testimonials", landingController.createTestimonial);
+  app.put("/api/testimonials/:id", landingController.updateTestimonial);
+  app.delete("/api/testimonials/:id", landingController.deleteTestimonial);
+
+  // Team Members Routes
+  app.get("/api/team", landingController.getAllTeamMembers);
+  app.post("/api/team", landingController.createTeamMember);
+  app.put("/api/team/:id", landingController.updateTeamMember);
+  app.delete("/api/team/:id", landingController.deleteTeamMember);
+
+  // Navbar Routes
+  app.get("/api/navbar", landingController.getAllNavItems);
+  app.post("/api/navbar", landingController.createNavItem);
+  app.put("/api/navbar/:id", landingController.updateNavItem);
+  app.delete("/api/navbar/:id", landingController.deleteNavItem);
+
+  // Food Categories Routes
+  app.get("/api/food-categories", landingController.getAllFoodCategories);
+  app.post("/api/food-categories", landingController.createFoodCategory);
+  app.put("/api/food-categories/:id", landingController.updateFoodCategory);
+  app.delete("/api/food-categories/:id", landingController.deleteFoodCategory);
+
+  // Location Section Routes
+  app.get("/api/location-section", landingController.getLocationSection);
+  app.put("/api/location-section", landingController.updateLocationSection);
+
 
 
   // Menu routes

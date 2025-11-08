@@ -19,10 +19,11 @@ const menuItemSchema = new mongoose.Schema(
     imageUrl: {
       type: String,
       required: true,
-      validate: {
-        validator: (url) => /^https?:\/\/.+\..+/.test(url),
-        message: "Must be a valid URL",
-      },
+    },
+    // Optional local fallback image path from the frontend public folder
+    fallbackImagePath: {
+      type: String,
+      required: false,
     },
     categories: {
       type: [String],
